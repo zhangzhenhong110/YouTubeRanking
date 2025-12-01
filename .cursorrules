@@ -1,0 +1,179 @@
+# Cursor AI Rules for YouTube Top Videos Search Project
+
+## Project Context
+
+This is a Next.js 15 application using the App Router that searches YouTube videos by keyword and returns the top videos sorted by view count.
+
+## Tech Stack
+
+- Next.js 15 (App Router)
+- TypeScript
+- Tailwind CSS
+- shadcn/ui components
+- YouTube Data API v3
+- Zod for validation
+
+## Code Style Guidelines
+
+### TypeScript
+- Use strict TypeScript
+- Prefer interfaces over types for object shapes
+- Always type function parameters and return values
+- Use proper error handling with try-catch
+
+### React/Next.js
+- Use "use client" directive for client components
+- Prefer server components when possible
+- Use proper loading and error states
+- Follow Next.js 15 conventions
+
+### Naming Conventions
+- Components: PascalCase (e.g., VideoCard, SearchForm)
+- Files: kebab-case (e.g., video-card.tsx, search-form.tsx)
+- Functions: camelCase (e.g., handleSearch, formatNumber)
+- Constants: UPPER_SNAKE_CASE (e.g., API_BASE_URL)
+
+### API Routes
+- Use proper HTTP status codes (200, 400, 403, 429, 500, 503)
+- Always validate input with Zod schemas
+- Include proper error messages
+- Log important events (cache hit/miss, errors, timing)
+
+### Component Structure
+- Keep components focused and single-purpose
+- Extract reusable logic into custom hooks
+- Use proper prop typing
+- Include aria labels for accessibility
+
+## YouTube API Best Practices
+
+### Quota Management
+- Cache results to minimize API calls
+- Use rate limiting to prevent bursts
+- Implement exponential backoff for retries
+- Log quota usage estimates
+
+### API Parameters
+- Always validate publishedAfter/publishedBefore
+- Use order=viewCount for initial search
+- Sort final results by actual viewCount from videos.list
+- Handle missing statistics gracefully (default to 0)
+
+## Security
+
+- Never commit .env files
+- Keep API keys in environment variables
+- Validate all user inputs
+- Sanitize error messages (don't expose internal details)
+
+## Performance
+
+- Use Next.js Image component for thumbnails
+- Implement proper loading states
+- Cache API responses with TTL
+- Use rate limiting to prevent abuse
+
+## Accessibility
+
+- Include proper ARIA labels
+- Support keyboard navigation
+- Use semantic HTML
+- Provide alt text for images
+
+## File Structure
+
+```
+/app
+  /api/search         # API routes
+  globals.css         # Global styles
+  layout.tsx          # Root layout
+  page.tsx            # Main page
+
+/components
+  /ui                 # shadcn/ui components
+  search-form.tsx     # Search form
+  video-card.tsx      # Video card
+  video-results.tsx   # Results grid
+  error-display.tsx   # Error UI
+
+/lib
+  cache.ts            # Caching logic
+  rate-limiter.ts     # Rate limiting
+  types.ts            # TypeScript types
+  utils.ts            # Utility functions
+  validation.ts       # Zod schemas
+  youtube.ts          # YouTube API integration
+```
+
+## Common Patterns
+
+### Error Handling
+```typescript
+try {
+  // API call
+} catch (error: any) {
+  if (error.response?.status === 429) {
+    // Handle rate limit
+  } else if (error.response?.status >= 500) {
+    // Handle server error
+  }
+  throw new Error('User-friendly message');
+}
+```
+
+### Caching
+```typescript
+const cacheKey = cache.generateKey(params);
+const cached = cache.get(cacheKey);
+if (cached) return cached;
+const result = await fetchData();
+cache.set(cacheKey, result);
+```
+
+### Rate Limiting
+```typescript
+await rateLimiter.throttle();
+// Make API call
+```
+
+## Testing Checklist
+
+Before committing:
+- [ ] TypeScript compiles without errors
+- [ ] No linter warnings
+- [ ] All imports are correct
+- [ ] Error states handled
+- [ ] Loading states implemented
+- [ ] Responsive design tested
+- [ ] Accessibility verified
+
+## Environment Variables
+
+Required:
+- `YOUTUBE_API_KEY`: YouTube Data API v3 key
+
+Optional:
+- `CACHE_TTL`: Cache time-to-live in seconds (default: 3600)
+
+## Commands
+
+```bash
+npm run dev      # Start development server
+npm run build    # Build for production
+npm run start    # Start production server
+npm run lint     # Run linter
+```
+
+## Documentation
+
+Always maintain:
+- README.md with setup instructions
+- SETUP.md with quick start guide
+- PRIVACY.md with privacy policy
+- Inline code comments for complex logic
+
+
+
+
+
+

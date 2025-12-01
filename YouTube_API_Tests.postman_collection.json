@@ -1,0 +1,202 @@
+{
+  "info": {
+    "name": "YouTube Top Videos API Tests",
+    "description": "测试 YouTube API 和本地搜索 API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. 直接测试 YouTube API",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://www.googleapis.com/youtube/v3/search?part=snippet&q=Jesus&type=video&maxResults=5&order=viewCount&key=AIzaSyCMVzF3RS-b_-8MOorZkd1-5FnwiwKM_ro",
+          "protocol": "https",
+          "host": ["www", "googleapis", "com"],
+          "path": ["youtube", "v3", "search"],
+          "query": [
+            {
+              "key": "part",
+              "value": "snippet",
+              "description": "返回片段信息"
+            },
+            {
+              "key": "q",
+              "value": "Jesus",
+              "description": "搜索关键词"
+            },
+            {
+              "key": "type",
+              "value": "video",
+              "description": "只搜索视频"
+            },
+            {
+              "key": "maxResults",
+              "value": "5",
+              "description": "返回结果数量"
+            },
+            {
+              "key": "order",
+              "value": "viewCount",
+              "description": "按观看次数排序"
+            },
+            {
+              "key": "key",
+              "value": "AIzaSyCMVzF3RS-b_-8MOorZkd1-5FnwiwKM_ro",
+              "description": "API 密钥"
+            }
+          ]
+        },
+        "description": "直接测试 Google YouTube API，验证 API 密钥是否有效"
+      },
+      "response": []
+    },
+    {
+      "name": "2. 测试本地 API - 完整参数",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/search?q=Jesus&timeRange=7d&limit=10&candidates=50&safeSearch=moderate",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "search"],
+          "query": [
+            {
+              "key": "q",
+              "value": "Jesus",
+              "description": "搜索关键词"
+            },
+            {
+              "key": "timeRange",
+              "value": "7d",
+              "description": "时间范围: 24h, 7d, 30d, custom"
+            },
+            {
+              "key": "limit",
+              "value": "10",
+              "description": "返回结果数量 (1-50)"
+            },
+            {
+              "key": "candidates",
+              "value": "50",
+              "description": "候选视频数量 (10-200)"
+            },
+            {
+              "key": "safeSearch",
+              "value": "moderate",
+              "description": "安全搜索: none, moderate, strict"
+            }
+          ]
+        },
+        "description": "测试本地 Next.js API 端点（需要服务器运行）"
+      },
+      "response": []
+    },
+    {
+      "name": "3. 测试本地 API - 最少参数",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/search?q=test",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "search"],
+          "query": [
+            {
+              "key": "q",
+              "value": "test",
+              "description": "搜索关键词"
+            }
+          ]
+        },
+        "description": "只使用必需参数测试（其他参数使用默认值）"
+      },
+      "response": []
+    },
+    {
+      "name": "4. 测试本地 API - 自定义时间范围",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/search?q=Jesus&timeRange=custom&start=2025-10-01T00:00:00Z&end=2025-10-26T23:59:59Z&limit=20",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "search"],
+          "query": [
+            {
+              "key": "q",
+              "value": "Jesus"
+            },
+            {
+              "key": "timeRange",
+              "value": "custom"
+            },
+            {
+              "key": "start",
+              "value": "2025-10-01T00:00:00Z",
+              "description": "开始时间 (ISO 8601)"
+            },
+            {
+              "key": "end",
+              "value": "2025-10-26T23:59:59Z",
+              "description": "结束时间 (ISO 8601)"
+            },
+            {
+              "key": "limit",
+              "value": "20"
+            }
+          ]
+        },
+        "description": "使用自定义时间范围"
+      },
+      "response": []
+    },
+    {
+      "name": "5. 测试本地 API - 带地区过滤",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/search?q=Jesus&timeRange=7d&regionCode=US&limit=10",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["api", "search"],
+          "query": [
+            {
+              "key": "q",
+              "value": "Jesus"
+            },
+            {
+              "key": "timeRange",
+              "value": "7d"
+            },
+            {
+              "key": "regionCode",
+              "value": "US",
+              "description": "地区代码: US, GB, JP, CN 等"
+            },
+            {
+              "key": "limit",
+              "value": "10"
+            }
+          ]
+        },
+        "description": "按地区过滤结果"
+      },
+      "response": []
+    }
+  ]
+}
+
+
+
+
+
